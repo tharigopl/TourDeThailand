@@ -28,6 +28,7 @@ class App extends Component {
               <Route path="/posts/new" component={PostNew} />
             </div>
           </BrowserRouter>
+          <div>Background</div>
         </div>
       );
     }
