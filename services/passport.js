@@ -23,21 +23,17 @@ passport.use(new GoogleStrategy({
         callbackURL: '/auth/google/callback',
         proxy:true
     }, 
-    (accessToken, refreshToken, profile, done) =>{
+    async (accessToken, refreshToken, profile, done) =>{
 
-        User.findOne({googleId:profile.id}).then(
-            (existingUser)=>{
-                if(existingUser){
-                    console.log("Existing");
-                    done(null, existingUser);
-                }else{
-                    new User({googleId:profile.id})
-                    .save()
-                    .then(newUser => done(null, newUser));
-                }
-            }
-        );
+        const existingUser = await User.findOne({googleId:profile.id});
         
+        if(existingUser){
+            console.log("Existing");
+            return done(null, existingUser);
+        }else{
+            const newUser = await new User({googleId:profile.id}).save();
+            done(null, newUser);
+        }        
         //console.log('TEST Access Token ####',accessToken);
         //console.log('TEST Refresh Token ####',refreshToken);
         //console.log('TEST Profile Token ####',profile);
