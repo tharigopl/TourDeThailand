@@ -5,8 +5,8 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
 const Posts = () => <h2>Posts</h2>
 const PostNew = () => <h2>PostNew</h2>
 
@@ -28,7 +28,6 @@ class App extends Component {
               <Route path="/posts/new" component={PostNew} />
             </div>
           </BrowserRouter>
-          <div>Background</div>
         </div>
       );
     }
