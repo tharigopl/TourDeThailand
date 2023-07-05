@@ -68,7 +68,7 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h1'){
-          navigation.navigate('ManageUser', {
+          navigation.navigate('ThaiTrip', {
               editedUserId:editedUserId,
               editedUser:selectedUser,
               token:token,
