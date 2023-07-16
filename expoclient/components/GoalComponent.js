@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from '@expo/vector-icons';
@@ -51,11 +51,12 @@ const GoalComponent = ({ item }) => {
                     </Text>
                 </View>
                 <View>
-                    <Text style={styles.goalvalue}>
                         {
                             goals?.value ? "Rs: " + goals.value : "Rs: 0"
                         }
-                    </Text>
+                    <TextInput style={styles.goalvalue}>
+                        
+                    </TextInput>
                 </View>
             </View>
         </Pressable>

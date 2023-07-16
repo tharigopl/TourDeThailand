@@ -14,6 +14,7 @@ import AuthContextProvider, { AuthContext } from './store/auth-context';
 import IconButton from './components/ui/IconButton';
 import HomeScreen from './screens/HomeScreen';
 import ThaiTripScreen from './screens/ThaiTripScreen';
+import GroupChatScreen from './screens/GroupChatScreen';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function AuthStack() {
@@ -25,7 +26,7 @@ function AuthStack() {
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="TdTLogin" component={LoginScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>
   );
@@ -71,6 +72,7 @@ function StackNavig(){
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="ThaiTrip" component={ThaiTripScreen} />
+      <Stack.Screen name="GroupChatScreen" component={GroupChatScreen} />
     </Stack.Navigator>
     );
 }

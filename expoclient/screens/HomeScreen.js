@@ -27,28 +27,28 @@ function HomeScreen({ navigation }) {
 
     useEffect(() => {
       async function getUserDetails() {
-        setIsFetching(true);
-        try {
-          //console.log("Inside User Details "+token);
-          console.log("Inside UID  1"+uid, token);
-          const userDetail = await fetchUserDetails(token);
-          setSelectedUser(userDetail);
-          console.log("User Detail fetched ", userDetail);
-          console.log("User Detail fetched 1", userDetail[0]);
-          console.log("User Detail fetched 2", userDetail[0].id);
-          setEditedUserId(userDetail[0].id)
-          usersCtx.setUsers(userDetail);
-          console.log("User Context", usersCtx.users);
-         /*  if(userDetail.length > 0){
-            setIsEditing(true);
-            console.log("User Detail fetched 1", userDetail);
-            setEditedUserId(selectedUser.id)
-          } */
-          //setFetchedAccounts(accounts);
-        } catch (error) {
-          setError('Could not fetch accounts!');
-        }
-        setIsFetching(false);
+        // setIsFetching(true);
+        // try {
+        //   //console.log("Inside User Details "+token);
+        //   console.log("Inside UID  1"+uid, token);
+        //   const userDetail = await fetchUserDetails(token);
+        //   setSelectedUser(userDetail);
+        //   console.log("User Detail fetched ", userDetail);
+        //   console.log("User Detail fetched 1", userDetail[0]);
+        //   console.log("User Detail fetched 2", userDetail[0].id);
+        //   setEditedUserId(userDetail[0].id)
+        //   usersCtx.setUsers(userDetail);
+        //   console.log("User Context", usersCtx.users);
+        //  /*  if(userDetail.length > 0){
+        //     setIsEditing(true);
+        //     console.log("User Detail fetched 1", userDetail);
+        //     setEditedUserId(selectedUser.id)
+        //   } */
+        //   //setFetchedAccounts(accounts);
+        // } catch (error) {
+        //   setError('Could not fetch accounts!');
+        // }
+        // setIsFetching(false);
       }
   
       getUserDetails();
@@ -87,7 +87,7 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h6'){ 
-          navigation.navigate('AllPartiesOverview', {
+          navigation.navigate('GroupChatScreen', {
             token:token,
           });          
         }

@@ -1,23 +1,37 @@
 import { useContext, useState } from 'react';
 import { Alert, ImageBackground, StyleSheet } from 'react-native';
+import { Link } from '@react-navigation/native';
 
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import { AuthContext } from '../store/auth-context';
 import { login } from '../util/auth';
+import { logintdtserver } from '../util/auth';
 
-function LoginScreen() {
+function LoginScreen({navigation}) {
   const image = {uri: 'https://legacy.reactjs.org/logo-og.png'};
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const authCtx = useContext(AuthContext);
 
   async function loginHandler({ email, password }) {
+    console.log("login")
     setIsAuthenticating(true);
     try {
-      const token = await login(email, password);
+      const token = await logintdtserver(email, password);
+      //const token = await login(email, password);
       authCtx.authenticate(token);
+      console.log("login1", token.data)
+      if(token.data == 'You entered the wrong password.'){
+        console.log("indie if")
+        navigation.navigate('Login')
+        Alert.alert(
+          'Authentication failed!',
+          'Could not log you in. Please check your credentials or try again later!'
+        );
+      }
     } catch (error) {
+      console.log("login2")
       Alert.alert(
         'Authentication failed!',
         'Could not log you in. Please check your credentials or try again later!'
