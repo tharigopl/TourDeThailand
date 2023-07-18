@@ -3,12 +3,50 @@ const router = require('express').Router();
 const User = mongoose.model('User');
 const passport = require('passport');
 const utils = require('../lib/utils');
+const jsonwebtoken = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
+
+const pathToKey = path.join(__dirname, '..', 'id_rsa_priv.pem');
+const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
 
 router.get('/protectedpass', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
 router.get('/protected', utils.authMiddleware, (req, res, next) => {
+    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+});
+
+router.get('/profile', utils.authMiddleware, async (req, res, next) => {
+
+    const tokenParts = req.headers.authorization.split(' ');
+    //console.log(req.headers);
+
+    if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+        console.log("$$$$$$$$$$$$$$$$",req.headers);
+        try {
+            const verification = await jsonwebtoken.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] });
+            console.log("#############",verification);
+            var userId = verification.id;
+            // Fetch the user by id 
+            User.findOne({_id: userId}).then(function(user){
+                // Do something with the user
+                return res.send(200);
+            });
+
+        } catch(err) {
+            res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
+        }
+
+    } else {
+        res.status(401).json({ success: false, msg: "You are not authorized to visit this route" });
+    }
+    //return res.send(500);
+    //res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+});
+
+router.get('/profile', utils.authMiddleware, (req, res, next) => {
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 

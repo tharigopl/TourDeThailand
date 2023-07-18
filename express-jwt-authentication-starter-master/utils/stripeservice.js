@@ -18,9 +18,6 @@ stripeUserData['individual'] = {
   'email': stripeuser.email
 };
 //console.log("Stripe user data cloned ", stripeUserData);
- 
-  
-  //console.log("Steripe service createStripeAccount 1",stripeuser);
 
 const account = await stripe.accounts.create(stripeUserData);
 
@@ -36,20 +33,6 @@ const accountLink = await stripe.accountLinks.create({
 });
 console.log("Account link ", accountLink);
 account['accountLink'] = accountLink;
-//console.log("Account id ", account);
-//console.log("Steripe service createStripeAaccount url link ", accountLink.url);
-
-  // const data = response.data;
-
-  // if (!data || data.status === 'ZERO_RESULTS') {
-  //   const error = new HttpError(
-  //     'Could not find location for the specified address.',
-  //     422
-  //   );
-  //   throw error;
-  // }
-
-  // const stripeuserResp = data.results[0];
 
   return account;
 }
