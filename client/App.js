@@ -15,6 +15,8 @@ import IconButton from './components/ui/IconButton';
 import HomeScreen from './screens/HomeScreen';
 import ThaiTripScreen from './screens/ThaiTripScreen';
 import GroupChatScreen from './screens/GroupChatScreen';
+import LinkStripeScreen from './screens/LinkStripeScreen';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function AuthStack() {
@@ -73,6 +75,7 @@ function StackNavig(){
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="ThaiTrip" component={ThaiTripScreen} />
       <Stack.Screen name="GroupChatScreen" component={GroupChatScreen} />
+      <Stack.Screen name="LinkStripeScreen" component={LinkStripeScreen} />
     </Stack.Navigator>
     );
 }

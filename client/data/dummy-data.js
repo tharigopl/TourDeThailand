@@ -13,7 +13,7 @@ export const HOMECATEGORIES = [
   new Category('h3', 'Friends', '#f5a442'),
   new Category('h4', 'Gpay', '#368dff'),
   new Category('h5', 'Board', '#41d95d'),
-  new Category('h6', 'GroupChat', '#ffc7ff'),
+  new Category('h6', 'LinkStripe', '#ffc7ff'),
   //new Category('h7', 'Reminder From The Minder', '#9eecff'),
   //new Category('h8', 'Link Stripe', '#b9ffb0'),  
 ];

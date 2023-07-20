@@ -6,17 +6,20 @@ const mongoose = require('mongoose');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
-const createStripeAcc = require('../util/stripeservice');
+const stripeService = require('../util/stripeservice');
+//const onBoardStripe = require('../util/stripeservice');
 
 
-const createStripeAccount = async (req, res, next) => {
-    console.log("CreaTE Stripe Account");
+const createStAccount = async (req, res, next) => {
+    console.log("CreaTE Stripe Account1");
     let accountLink;
     try{
-        accountLink = await createStripeAcc();
+      console.log("CreaTE Stripe Account2");
+        accountLink = await stripeService.createStripeAccount();
+        console.log("CreaTE Stripe Account3");
     }catch(err){
         const error = new HttpError(
-            'Signing up failed, please try again later.',
+            'Linking stripe account failed, please try again later.',
             500
             );
             return next(error);
@@ -26,29 +29,26 @@ const createStripeAccount = async (req, res, next) => {
     res.json({
         accountLink: accountLink
       });
-    // let users;
-  
-    // let existingUser;
-    // try {
-    //   existingUser = await User.findById(req.params.id);
-    // } catch (err) {
-    //   const error = new HttpError(
-    //     'Signing up failed, please try again later.',
-    //     500
-    //   );
-    //   return next(error);
-    // }
-  
-    // // try {
-    // //   users = await User.find({}, '-password');
-    // // } catch (err) {
-    // //   const error = new HttpError(
-    // //     'Fetching users failed, please try again later.',
-    // //     500
-    // //   );
-    // //   return next(error);
-    // // }
-    // res.json({ user: existingUser });
   };
 
-  exports.createStripeAccount = createStripeAccount;
+  const onBoardedStripe = async (req, res, next) => {
+    console.log("Onboarded stripe");
+    let accountLink;
+    try{
+        accountLink = await stripeService.onBoardStripe();
+    }catch(err){
+        const error = new HttpError(
+            'Linking stripe account failed, please try again later.',
+            500
+            );
+            return next(error);
+    }
+    
+
+    res.json({
+        accountLink: accountLink
+      });
+  };
+
+  exports.createStAccount = createStAccount;
+  exports.onBoardedStripe = onBoardedStripe;

@@ -23,7 +23,7 @@ function HomeScreen({ navigation }) {
 
     const [editedUserId, setEditedUserId] = useState("");
     const [selectedUser, setSelectedUser] = useState([]);
-
+    console.log("Home Screen Token ", token);
 
     useEffect(() => {
       async function getUserDetails() {
@@ -87,7 +87,7 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h6'){ 
-          navigation.navigate('GroupChatScreen', {
+          navigation.navigate('LinkStripeScreen', {
             token:token,
           });          
         }

@@ -20,8 +20,8 @@ function LoginScreen({navigation}) {
     try {
       const token = await logintdtserver(email, password);
       //const token = await login(email, password);
-      authCtx.authenticate(token);
-      console.log("login1", token.data)
+      authCtx.authenticate(token.data.token);
+      console.log("login1", token.data.token)
       if(token.data == 'You entered the wrong password.'){
         console.log("indie if")
         navigation.navigate('Login')

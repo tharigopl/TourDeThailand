@@ -8,9 +8,9 @@ const router = express.Router();
 
 
 
-router.use(checkAuth);
+//router.use(checkAuth);
 
-router.get('/link', stripeControllers.createStripeAccount);
+router.get('/link', stripeControllers.createStAccount);
 
 // router.post(
 //   '/',
@@ -39,5 +39,7 @@ router.get('/link', stripeControllers.createStripeAccount);
 // );
 
 // router.delete('/:pid', placesControllers.deletePlace);
+
+router.get('/onboarded', stripeControllers.onBoardedStripe);
 
 module.exports = router;

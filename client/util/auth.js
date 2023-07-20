@@ -17,17 +17,18 @@ console.log("response.data ", response.data.email);
 }
 
 async function tdtauthenticate(mode, email, password) {
-  var url = `http://localhost:3000/users/login`;
+  var url = `http://localhost:5000/api/users/login`;
   console.log("POST1111");
   if(mode == 'signUp'){
     console.log("Signup1");
-    url = 'http://localhost:3000/users/register';
+    url = 'http://localhost:5000/api/users/signup';
   }
   console.log(url)
+  const name = 'test';
   const response = await axios.post(url, {
     email: email,
     password: password,
-    returnSecureToken: true,
+    name: name,
   });
 console.log("response.data ", response);
   const token = response;
