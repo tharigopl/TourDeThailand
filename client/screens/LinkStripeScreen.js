@@ -14,6 +14,8 @@ export default function LinkStripeScreen() {
 
     const [stAccOnBoardingUrl, setStAccOnBoardingUrl] = useState(null);
 
+    const [output, setOutput] = useState(null);
+
     const authCtx = useContext(AuthContext);
     const token = authCtx.token;
     console.log("Token &&&&&&&", token);
@@ -27,13 +29,16 @@ export default function LinkStripeScreen() {
             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!",stripeDash.data.accountLink.accountLink.url);
             setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
             
-            //const result = await WebBrowser.openBrowserAsync(stripeDash.data.accountLink.accountLink.url);
+            const result = await WebBrowser.openBrowserAsync(stripeDash.data.accountLink.accountLink.url);
                 console.log("Linkine", Linking.createURL(""));
-            const result = await WebBrowser.openAuthSessionAsync(stripeDash.data.accountLink.accountLink.url, Linking.createURL(""));
-              let redirectData;
-              if (result.url) {
-                redirectData = Linking.parse(result.url);
-              }
+                setOutput(result);
+
+           // const result = await WebBrowser.openAuthSessionAsync(`${stripeDash.data.accountLink.accountLink.url}?linkingUri=${Linking.createURL('/?')}`);
+            //console.log("Result ", result);
+            //   let redirectData;
+            //   if (result.url) {
+            //     redirectData = Linking.parse(result.url);
+            //   }
         
             //   setstate({ result, redirectData });
 
@@ -48,7 +53,7 @@ export default function LinkStripeScreen() {
 
   return (
     <SafeAreaView style={styles.linkstripescreen}>
-    
+    <Text>{output && JSON.stringify(output)}</Text>
     </SafeAreaView>
   )
 }

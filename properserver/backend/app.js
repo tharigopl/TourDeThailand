@@ -56,7 +56,7 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
-// console.log("@@@@@@@@@@@@@@@",process.env.MONGI_URI);
+console.log("@@@@@@@@@@@@@@@",process.env.MONGI_URI);
 mongoose
   .connect(
     process.env.MONGI_URI
