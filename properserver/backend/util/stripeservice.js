@@ -25,17 +25,31 @@ async function createStripeAccount() {
   console.log(process.env.STRIPE_SK);
 
   const account = await stripe.accounts.create(stripeUserData);
-  console.log("SSSSS",account.id, process.env.STRIPE_PUBLIC_DOMAIN);
+  console.log("SSSSS",account);
+  // Create an account link for the user's Stripe account
+  // const accountLink = await stripe.accountLinks.create({
+  //   account: account.id,
+  //   refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/authorize',
+  //   return_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/onboarded',
+  //   type: 'account_onboarding'
+  // });
+  // console.log("Account link ", accountLink);
+  // account['accountLink'] = accountLink;
+    return account;
+}
+
+async function createStripeAccountLink(accountid) {
+  
+  console.log("SSSSS",accountid);
   // Create an account link for the user's Stripe account
   const accountLink = await stripe.accountLinks.create({
-    account: account.id,
+    account: accountid,
     refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/authorize',
     return_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/onboarded',
     type: 'account_onboarding'
   });
   console.log("Account link ", accountLink);
-  account['accountLink'] = accountLink;
-    return account;
+    return accountLink;
 }
 
 async function onBoardStripe(){
@@ -62,4 +76,4 @@ async function onBoardStripe(){
 
 }
 
-module.exports = {createStripeAccount, onBoardStripe};
+module.exports = {createStripeAccount, onBoardStripe, createStripeAccountLink};
