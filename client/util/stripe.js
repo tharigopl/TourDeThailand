@@ -26,8 +26,8 @@ const config = {
 };
 
 
-  const response = await axios.get(BACKEND_URL, 
-    config).catch(function (error) {
+  const response = await axios.get(BACKEND_URL, config)
+  .catch(function (error) {
     if (error.response) {
       // Request made and server responded
       console.log(error.response.data);
@@ -42,7 +42,8 @@ const config = {
     }
 
   });
-  console.log("#$#$#$", response);
-  const id = response.data.name;
-  return response;
+  console.log("#$#$#$adsasd 111221", response);
+  //const id = response.data.name;
+  return response.data;
 }
+

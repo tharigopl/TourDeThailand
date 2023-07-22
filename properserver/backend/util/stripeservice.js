@@ -10,22 +10,21 @@ const stripe = require('stripe')(process.env.STRIPE_SK, {
     apiVersion: process.env.STRIPE_API_VERSION || '2022-08-01'
   });
 
-async function createStripeAccount() {
+async function createStripeAccount(stripeUserData) {
   
-  const stripeUserData = {};
-  stripeUserData['business_type'] = 'individual';
-  stripeUserData['email'] = 'SSASSAASS@gmail.com';  
+  //const stripeUserData = {};
+  //stripeUserData['business_type'] = 'individual';
+  //stripeUserData['email'] = 'tori@gmail.com';  
   stripeUserData['country'] = 'US';
-  stripeUserData['type'] = 'express';
-  stripeUserData['individual'] = {
-    'last_name' : 'DDDDDE',
-    'first_name' : 'SSSSSSSDD',
-    'email': 'SSASSAASS@gmail.com'
-  };
-  console.log(process.env.STRIPE_SK);
+  stripeUserData['type'] = 'standard';
+  // stripeUserData['individual'] = {
+  //   'last_name' : 'DDDDDE',
+  //   'first_name' : 'SSSSSSSDD',
+  //   'email': 'tori@gmail.com'
+  // };
 
   const account = await stripe.accounts.create(stripeUserData);
-  console.log("SSSSS",account);
+  //console.log("SSSSS",account);
   // Create an account link for the user's Stripe account
   // const accountLink = await stripe.accountLinks.create({
   //   account: account.id,
@@ -67,6 +66,30 @@ async function onBoardStripe(){
       console.log('The onboarding process was not completed.');
       //res.redirect('/hosts/signup');
     }
+    //console.log(account);
+    return account;
+  } catch (err) {
+    console.log('Failed to retrieve Stripe account information.');
+    console.log(err);
+  }
+
+}
+
+async function retrieveStripeAccount(accountid){
+  try {
+    // Retrieve the user's Stripe account and check if they have finished onboarding
+    console.log("retrieve Stripe call");
+    const account = await stripe.account.retrieve(accountid);
+    //console.log("On Boarded Stripe call1", account);
+    if (account.details_submitted) {
+      
+      // Redirect to the Rocket Rides dashboard
+      
+      //res.redirect('/hosts/dashboard');
+    } else {
+      console.log('The onboarding process was not completed.');
+      //res.redirect('/hosts/signup');
+    }
     
     return account;
   } catch (err) {
@@ -76,4 +99,4 @@ async function onBoardStripe(){
 
 }
 
-module.exports = {createStripeAccount, onBoardStripe, createStripeAccountLink};
+module.exports = {createStripeAccount, onBoardStripe, createStripeAccountLink, retrieveStripeAccount};

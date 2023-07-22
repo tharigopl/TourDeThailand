@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
+
 const Schema = mongoose.Schema;
 
 const stripeUserSchema = new Schema({
@@ -244,7 +245,8 @@ const stripeUserSchema = new Schema({
     },
     "type": {
       "type": "String"
-    }
+    },
+    "accountlink": { type: mongoose.Types.ObjectId, ref: 'StripeUserAccountLink' }
   
 });
 

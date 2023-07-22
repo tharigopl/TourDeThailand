@@ -10,7 +10,7 @@ const router = express.Router();
 
 //router.use(checkAuth);
 
-router.get('/link', stripeControllers.createStAccount);
+router.get('/link', checkAuth, stripeControllers.createStAccount);
 
 // router.post(
 //   '/',

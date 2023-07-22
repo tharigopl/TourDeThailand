@@ -8,6 +8,7 @@ import { AuthContext } from '../store/auth-context';
 import { WebView } from 'react-native-webview';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
+import Constants from 'expo-constants';
 
 
 export default function LinkStripeScreen() {
@@ -15,45 +16,41 @@ export default function LinkStripeScreen() {
     const [stAccOnBoardingUrl, setStAccOnBoardingUrl] = useState(null);
 
     const [output, setOutput] = useState(null);
+    const [redirectData, setRedirectData] = useState(null);
+    const [subscriber, setSubscriber] = useState(null);
 
     const authCtx = useContext(AuthContext);
     const token = authCtx.token;
     console.log("Token &&&&&&&", token);
    
       useEffect(() => {
-        console.log("Stripe Dashboard UseEffect");
-        async function linkStripeAcc() {
-            try {
-            const stripeDash = await linkStripe(token);
-            //setFetchedAccounts(accounts);
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!",stripeDash.data.accountLink.accountLink.url);
-            setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
-            
-            const result = await WebBrowser.openBrowserAsync(stripeDash.data.accountLink.accountLink.url);
-                console.log("Linkine", Linking.createURL(""));
-                setOutput(result);
+            console.log("Stripe Dashboard UseEffect");
+            async function linkStripeAcc() {
+                try {
+                const stripeDash = await linkStripe(token);
+                //setFetchedAccounts(accounts);
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stripeDash);
+                //setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
+                
+                const result = await WebBrowser.openBrowserAsync(stripeDash.accountLink.url);
+                
+                    console.log("Linkine", Linking.createURL(""));
+                    setOutput(result);
 
-           // const result = await WebBrowser.openAuthSessionAsync(`${stripeDash.data.accountLink.accountLink.url}?linkingUri=${Linking.createURL('/?')}`);
-            //console.log("Result ", result);
-            //   let redirectData;
-            //   if (result.url) {
-            //     redirectData = Linking.parse(result.url);
-            //   }
-        
-            //   setstate({ result, redirectData });
 
-            } catch (error) {
-                //setError('Could not fetch dashoard!');
+                } catch (error) {
+                    //setError('Could not fetch dashoard!');
+                }
             }
-        }
 
-        linkStripeAcc();
+            linkStripeAcc();
         }, []);
 
+    
 
   return (
     <SafeAreaView style={styles.linkstripescreen}>
-    <Text>{output && JSON.stringify(output)}</Text>
+    <Text>{output && JSON.stringify(output)}</Text>    
     </SafeAreaView>
   )
 }
