@@ -5,8 +5,12 @@ import axios from 'axios';
 import { HOMECATEGORIES } from '../data/dummy-data';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../store/auth-context';
+import { StripeContext } from '../store/stripe-context';
 import { fetchUserDetails } from '../util/http';
+import { linkStripe } from '../util/stripe';
+import { getStripeAccount } from '../util/stripe';
 import { UserContext } from '../store/user-context'; 
+import * as WebBrowser from 'expo-web-browser';
 
 
 function HomeScreen({ navigation }) {
@@ -15,6 +19,7 @@ function HomeScreen({ navigation }) {
     const [isSubmitting, setIsSubmitting] = useState(false); 
     const [isFetching, setIsFetching] = useState(true);
     const [error, setError] = useState();
+    const stripeCtx = useContext(StripeContext);
 
     const authCtx = useContext(AuthContext);
     const usersCtx = useContext(UserContext);
@@ -55,7 +60,7 @@ function HomeScreen({ navigation }) {
     }, []);
 
   function renderCategoryItem(itemData) {
-    function pressHandler() {
+    async function pressHandler() {
 
         if(itemData.item.id === 'h2'){
             navigation.navigate('Chat', {
@@ -75,24 +80,59 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h8'){
+          console.log('WWWWWWWWWWWWWWWWWWWw');
+          
+
           navigation.navigate('LinkStripeAccount', {
               editedUserId:editedUserId,
               editedUser:selectedUser,
               token:token,
           });          
         }
-        else if(itemData.item.id === 'h5'){ 
-          navigation.navigate('AllExpensesOverview', {
+        else if(itemData.item.id === 'h4'){ 
+          navigation.navigate('LinkStripeWebViewScreen', {
             token:token,
           });          
         }
         else if(itemData.item.id === 'h6'){ 
+          console.log('QQQQQQQQQQQQ');
+          await linkStripeAcc();
+
           navigation.navigate('LinkStripeScreen', {
             token:token,
           });          
         }
 
     }
+
+    async function linkStripeAcc() {
+      try {
+console.log("Auth Context Home Screen", authCtx);
+          if(authCtx.stripeuserid === undefined){
+              console.log("*********************1");
+              const stripeDash = await linkStripe(token);
+              //setFetchedAccounts(accounts);
+              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stripeDash);
+              stripeCtx.setstripeaccount(JSON.stringify(stripeDash));
+              console.log("############################", stripeCtx.stripeaccount);
+              //setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
+              //authCtx.saveStripeUserId(stripeDash);
+              const result = await WebBrowser.openBrowserAsync(stripeDash.accountLink.url);
+          
+              
+              setOutput(result);
+          }else{
+              console.log("*********************2");
+              // const stripeDash = await getStripeAccount(authCtx.stripeuserid);
+              // console.log("************************",stripeDash);
+              // stripeCtx.setstripeaccount(stripeDash);
+          }                    
+
+
+      } catch (error) {
+          //setError('Could not fetch dashoard!');
+      }
+  }
 
     return (
       <HomeGridTile

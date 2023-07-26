@@ -17,7 +17,8 @@ function SignupScreen() {
     try {
       //const token = await createUser(email, password);
       const token = await createUserTdtServer(email, password);
-      authCtx.authenticate(token);
+      //console.log("SignUp Token", token);
+      authCtx.authenticate(token.data.token);
     } catch (error) {
       Alert.alert(
         'Authentication failed',

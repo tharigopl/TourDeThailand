@@ -157,6 +157,7 @@ const login = async (req, res, next) => {
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
+    stripeuser: existingUser.stripeuser,
     token: token
   });
 };

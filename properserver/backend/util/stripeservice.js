@@ -75,21 +75,12 @@ async function onBoardStripe(){
 
 }
 
-async function retrieveStripeAccount(accountid){
+async function retrieveStripeAccountByAccountId(accountid){
   try {
     // Retrieve the user's Stripe account and check if they have finished onboarding
     console.log("retrieve Stripe call");
     const account = await stripe.account.retrieve(accountid);
-    //console.log("On Boarded Stripe call1", account);
-    if (account.details_submitted) {
-      
-      // Redirect to the Rocket Rides dashboard
-      
-      //res.redirect('/hosts/dashboard');
-    } else {
-      console.log('The onboarding process was not completed.');
-      //res.redirect('/hosts/signup');
-    }
+    //console.log("On Boarded Stripe call1", account);   
     
     return account;
   } catch (err) {
@@ -99,4 +90,4 @@ async function retrieveStripeAccount(accountid){
 
 }
 
-module.exports = {createStripeAccount, onBoardStripe, createStripeAccountLink, retrieveStripeAccount};
+module.exports = {createStripeAccount, onBoardStripe, createStripeAccountLink, retrieveStripeAccountByAccountId};

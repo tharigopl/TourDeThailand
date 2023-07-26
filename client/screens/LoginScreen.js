@@ -21,7 +21,8 @@ function LoginScreen({navigation}) {
       const token = await logintdtserver(email, password);
       //const token = await login(email, password);
       authCtx.authenticate(token.data.token);
-      console.log("login1", token.data.token)
+      authCtx.saveStripeUserId(token.data.stripeuser);
+      console.log("login1", token.data)
       if(token.data == 'You entered the wrong password.'){
         console.log("indie if")
         navigation.navigate('Login')
@@ -31,7 +32,7 @@ function LoginScreen({navigation}) {
         );
       }
     } catch (error) {
-      console.log("login2")
+      console.log("login2", error)
       Alert.alert(
         'Authentication failed!',
         'Could not log you in. Please check your credentials or try again later!'
@@ -46,9 +47,9 @@ function LoginScreen({navigation}) {
 
   return  (
       //<View>
-      <ImageBackground source={require("../assets/wordcloud.png")} resizeMode="cover" style={styles.image}>
+      //<ImageBackground source={require("../assets/wordcloud.png")} resizeMode="cover" style={styles.image}>
         <AuthContent isLogin onAuthenticate={loginHandler} />
-        </ImageBackground>
+        //</ImageBackground>
       //</View>
     );
 }

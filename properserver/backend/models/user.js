@@ -9,7 +9,7 @@ const userSchema = new Schema({
   password: { type: String, required: true, minlength: 6 },
   //image: { type: String, required: true },
   places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place' }],
-  stripeuser: {type: mongoose.Types.ObjectId, ref:'StripeUserAccountLink'}
+  stripeuser: {type: mongoose.Types.ObjectId, ref:'StripeUser'}
 });
 
 userSchema.plugin(uniqueValidator);

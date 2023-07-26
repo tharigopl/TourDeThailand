@@ -42,4 +42,6 @@ router.get('/link', checkAuth, stripeControllers.createStAccount);
 
 router.get('/onboarded', stripeControllers.onBoardedStripe);
 
+router.get('/account', stripeControllers.getStripeAccountByAccountId);
+
 module.exports = router;

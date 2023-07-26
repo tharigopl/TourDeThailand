@@ -17,11 +17,11 @@ console.log("response.data ", response.data.email);
 }
 
 async function tdtauthenticate(mode, email, password) {
-  var url = `http://localhost:5000/api/users/login`;
+  var url = `http://192.168.0.157:5000/api/users/login`;
   console.log("POST1111");
   if(mode == 'signUp'){
     console.log("Signup1");
-    url = 'http://localhost:5000/api/users/signup';
+    url = 'http://192.168.0.157:5000/api/users/signup';
   }
   console.log(url)
   const name = 'test';
@@ -30,7 +30,7 @@ async function tdtauthenticate(mode, email, password) {
     password: password,
     name: name,
   });
-console.log("response.data ", response);
+
   const token = response;
 
   return token;

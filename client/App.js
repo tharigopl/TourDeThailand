@@ -16,6 +16,8 @@ import HomeScreen from './screens/HomeScreen';
 import ThaiTripScreen from './screens/ThaiTripScreen';
 import GroupChatScreen from './screens/GroupChatScreen';
 import LinkStripeScreen from './screens/LinkStripeScreen';
+import LinkStripeWebViewScreen from './screens/LinkStripeWebViewScreen';
+import StripeContextProvider from './store/stripe-context';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -76,6 +78,7 @@ function StackNavig(){
       <Stack.Screen name="ThaiTrip" component={ThaiTripScreen} />
       <Stack.Screen name="GroupChatScreen" component={GroupChatScreen} />
       <Stack.Screen name="LinkStripeScreen" component={LinkStripeScreen} />
+      <Stack.Screen name="LinkStripeWebViewScreen" component={LinkStripeWebViewScreen} />
     </Stack.Navigator>
     );
 }
@@ -127,7 +130,9 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <Root />
+        <StripeContextProvider>
+          <Root />
+        </StripeContextProvider>
       </AuthContextProvider>
     </>
   );

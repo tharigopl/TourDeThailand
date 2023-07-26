@@ -30,8 +30,9 @@ const createStAccount = async (req, res, next) => {
     }
   
     if (existingStripeUser) {
-      const exStUser = await stripeService.retrieveStripeAccount(existingStripeUser.id);
+      const exStUser = await stripeService.retrieveStripeAccountByAccountId(existingStripeUser.id);
       console.log("Existing Struoe ", exStUser);
+      account = exStUser;
     }else{
       try{
         console.log("CreaTE Stripe Account2");
@@ -107,11 +108,45 @@ const createStAccount = async (req, res, next) => {
             return next(error);
     }
     
-
+    
     res.json({
-        accountLink: accountLink
+        accountLink: 'Account created successfully! Close the browser and return to the app. Thanks!'
+      });
+  };
+
+  const getStripeAccountByAccountId = async (req, res, next) => {
+    console.log("Get Stripe Account by account id stripe",req.params);
+    let accountLink;
+    try{
+
+      const stripeUser = await StripeUser.findById(req.params.stripeaccountid);
+      let existingStripeUser;
+      try {
+        existingStripeUser = await StripeUser.findOne({ _id: stripeUser.id });
+      } catch (err) {
+        const error = new HttpError(
+          'Stripe User Not Found',
+          500
+        );
+        //return next(error);
+      }
+
+        accountLink = await stripeService.retrieveStripeAccountByAccountId(existingStripeUser.id);
+
+    }catch(err){
+        const error = new HttpError(
+            'Linking stripe account failed, please try again later.',
+            500
+            );
+            return next(error);
+    }
+    
+    
+    res.json({
+        accountLink: 'Account created successfully! Close the browser and return to the app. Thanks!'
       });
   };
 
   exports.createStAccount = createStAccount;
   exports.onBoardedStripe = onBoardedStripe;
+  exports.getStripeAccountByAccountId = getStripeAccountByAccountId;
