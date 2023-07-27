@@ -26,14 +26,14 @@ export default function LinkStripeScreen() {
     console.log("Token &&&&&&&", authCtx);
     console.log("Stripe Ctx Account &&&&&&&", stripeCtx);
    
-    stripeCtx.setstripeaccount(stripeaccount);
+    
 
       useEffect(() => {
             
             async function linkStripeAcc() {
                 try {
 
-                    if(authCtx.stripeuserid === undefined){
+                    if(authCtx.stripeuserid === 'undefined'){
                         console.log("*********************1");
                         // const stripeDash = await linkStripe(token);
                         // //setFetchedAccounts(accounts);
@@ -48,7 +48,7 @@ export default function LinkStripeScreen() {
                         // setOutput(result);
                     }else{
                         console.log("*********************2",authCtx.stripeuserid);
-                        const stripeDash = await getStripeAccount(authCtx.stripeuserid);
+                        const stripeDash = await getStripeAccount(token, authCtx.stripeuserid);
                         console.log("************************",stripeDash);
                         stripeCtx.setstripeaccount(stripeDash);
                         setStripeAccount(stripeDash)

@@ -108,7 +108,7 @@ function HomeScreen({ navigation }) {
     async function linkStripeAcc() {
       try {
 console.log("Auth Context Home Screen", authCtx);
-          if(authCtx.stripeuserid === undefined){
+          if(authCtx.stripeuserid === 'undefined'){
               console.log("*********************1");
               const stripeDash = await linkStripe(token);
               //setFetchedAccounts(accounts);
@@ -116,13 +116,13 @@ console.log("Auth Context Home Screen", authCtx);
               stripeCtx.setstripeaccount(JSON.stringify(stripeDash));
               console.log("############################", stripeCtx.stripeaccount);
               //setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
-              //authCtx.saveStripeUserId(stripeDash);
+              authCtx.saveStripeUserId(token.data.stripeuser);
               const result = await WebBrowser.openBrowserAsync(stripeDash.accountLink.url);
           
               
               setOutput(result);
           }else{
-              console.log("*********************2");
+              // console.log("*********************2",authCtx.stripeuserid);
               // const stripeDash = await getStripeAccount(authCtx.stripeuserid);
               // console.log("************************",stripeDash);
               // stripeCtx.setstripeaccount(stripeDash);

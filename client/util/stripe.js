@@ -51,20 +51,20 @@ export async function linkStripe(token) {
 }
 
 
-export async function getStripeAccount(stripeaccountid) { 
+export async function getStripeAccount(token, stripeaccountid) { 
     
-  console.log("Stripe js get stripe account",stripeaccountid);
+  console.log("Stripe js get stripe account xxxx",stripeaccountid);
   
   //const headers = { Authorization: `Bearer ${token}` };
-  const config = {
-      headers: { Authorization: `Bearer ${token}` },
-      params: {'stripeaccountid':stripeaccountid},
-  };
+  // const config = {
+  //    // headers: { Authorization: `Bearer ${token}` },
+  //     params: {stripeaccountid:stripeaccountid}
+  // };
 
   //const reqParam = {'stripeaccountid':stripeaccountid};
 
-
-  const response = await axios.get(BACKEND_URL_STRIPE+'account', config)
+console.log("config");
+  const response = await axios.get(BACKEND_URL_STRIPE+'account\\'+stripeaccountid)
   .catch(function (error) {
     if (error.response) {
       // Request made and server responded

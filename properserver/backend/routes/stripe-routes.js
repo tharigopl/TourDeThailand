@@ -1,16 +1,14 @@
-const express = require('express');
-const { check } = require('express-validator');
+const express = require("express");
+const { check } = require("express-validator");
 
-const stripeControllers = require('../controllers/stripe-controllers');
-const checkAuth = require('../middleware/check-auth');
+const stripeControllers = require("../controllers/stripe-controllers");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-
-
 //router.use(checkAuth);
 
-router.get('/link', checkAuth, stripeControllers.createStAccount);
+router.get("/link", checkAuth, stripeControllers.createStAccount);
 
 // router.post(
 //   '/',
@@ -40,8 +38,15 @@ router.get('/link', checkAuth, stripeControllers.createStAccount);
 
 // router.delete('/:pid', placesControllers.deletePlace);
 
-router.get('/onboarded', stripeControllers.onBoardedStripe);
+router.get("/onboarded", stripeControllers.onBoardedStripe);
 
-router.get('/account', stripeControllers.getStripeAccountByAccountId);
+router.get(
+  "/account/:stripeaccountid",
+  stripeControllers.getStripeAccountByAccountId
+);
+router.get(
+  "/balance/:stripeaccountid",
+  stripeControllers.getStripeBalanceAccountId
+);
 
 module.exports = router;
