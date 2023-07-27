@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const usersController = require('../controllers/users-controllers');
+const friendsController = require('../controllers/friends-controllers');
 const fileUpload = require('../middleware/file-upload');
 
 const router = express.Router();
@@ -37,5 +38,26 @@ router.patch(
   ],
   usersController.updateUser
 );
+
+router.post(
+  '/:id/friend',
+  // fileUpload.single('image'),
+  [
+    check('firstname')
+      .not()
+      .isEmpty(),
+    check('email')
+      .normalizeEmail()
+      .isEmail(),
+    check('lastname')
+      .not()
+      .isEmpty()
+  ],
+  friendsController.createFriend
+);
+
+router.get('/:id/friends', friendsController.getAllFriendsForUser);
+
+
 
 module.exports = router;
