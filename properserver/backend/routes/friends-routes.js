@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/:friendid', friendsControllers.getFriendById);
 
+//router.get('/:userid', friendsControllers.getFriendsByUid);
+
 router.get('/user/:userid', friendsControllers.getFriendsByUserId);
 
 router.use(checkAuth);
@@ -20,7 +22,9 @@ router.post(
     check('email')
       .not()
       .isEmpty(),
-    check('firstname').isLength({ min: 5 }),
+    check('firstname')
+      .not()
+      .isEmpty(),
     check('lastname')
       .not()
       .isEmpty()

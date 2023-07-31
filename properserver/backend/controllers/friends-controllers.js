@@ -13,10 +13,12 @@ const getAllFriendsForUser = async (req, res, next) => {
     //console.log("Get All Friends For User", req.params);
     let friend;
     let user;
+    let tempfriends;
     try {
-
        user = await User.findOne({ _id: req.params.id });
-       console.log(user)
+       //console.log(user)
+       tempfriends = await User.findById(req.params.id).populate('friends');
+       //console.log("tempfriends ",tempfriends)
       friend = await Friend.find({ _id: user.friends });
     } catch (err) {
       const error = new HttpError(
@@ -100,7 +102,7 @@ const createFriend = async (req, res, next) => {
     );
   }
 
-  const { email, firstname, lastname } = req.body;
+  const { email, firstname, lastname, uid } = req.body;
 
 //   let coordinates;
 //   try {
@@ -108,16 +110,17 @@ const createFriend = async (req, res, next) => {
 //   } catch (error) {
 //     return next(error);
 //   }
-  console.log("Create Friend ", req.params);
+  console.log("Create Friend ", req.body);
   const createdFriend = new Friend({
     email,
     firstname,
-    lastname
+    lastname, 
+    uid
   });
 
   let user;
   try {
-    user = await User.findOne({_id : req.params.id});
+    user = await User.findOne({_id : uid});
   } catch (err) {
     const error = new HttpError(
       'Creating friend failed, please try again.', err,

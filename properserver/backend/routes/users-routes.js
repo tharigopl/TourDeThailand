@@ -1,5 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
+const checkAuth = require('../middleware/check-auth');
 
 const usersController = require('../controllers/users-controllers');
 const friendsController = require('../controllers/friends-controllers');
@@ -7,7 +8,7 @@ const fileUpload = require('../middleware/file-upload');
 
 const router = express.Router();
 
-router.get('/', usersController.getUsers);
+router.get('/', checkAuth, usersController.getUsers);
 
 router.get('/:id',usersController.findSingleUserById);
 
@@ -56,8 +57,22 @@ router.post(
   friendsController.createFriend
 );
 
-router.get('/:id/friends', friendsController.getAllFriendsForUser);
+router.get('/:uid/friends', usersController.getFriendsByUserId);
 
+router.patch('/:uid/friendsid', 
+  [
+    check('friendids')
+      .not()
+      .isEmpty()
+  ],
+  usersController.addFriendsByFriendIds);
 
+router.patch('/:uid/friendsemail', 
+[
+  check('emailids')
+    .not()
+    .isEmpty()
+],
+usersController.addFriendsByFriendEmail);
 
 module.exports = router;

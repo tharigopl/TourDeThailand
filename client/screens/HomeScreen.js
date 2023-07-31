@@ -28,7 +28,7 @@ function HomeScreen({ navigation }) {
 
     const [editedUserId, setEditedUserId] = useState("");
     const [selectedUser, setSelectedUser] = useState([]);
-    console.log("Home Screen Token ", token);
+    console.log("Home Screen Token ", token, uid);
 
     useEffect(() => {
       async function getUserDetails() {
@@ -68,7 +68,7 @@ function HomeScreen({ navigation }) {
             });
         }
         else if(itemData.item.id === 'h3'){
-          navigation.navigate('AllAccountsOverview', {
+          navigation.navigate('AllFriends', {
               token:token,
           });          
         }
@@ -108,12 +108,12 @@ function HomeScreen({ navigation }) {
     async function linkStripeAcc() {
       try {
 console.log("Auth Context Home Screen", authCtx);
-          if(authCtx.stripeuserid === 'undefined'){
+          if(authCtx.stripeuserid === undefined){
               console.log("*********************1");
               const stripeDash = await linkStripe(token);
               //setFetchedAccounts(accounts);
-              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stripeDash);
-              stripeCtx.setstripeaccount(JSON.stringify(stripeDash));
+              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stripeDash.account);
+              stripeCtx.setstripeaccount(JSON.stringify(stripeDash.account));
               console.log("############################", stripeCtx.stripeaccount);
               //setStAccOnBoardingUrl(stripeDash.data.accountLink.accountLink.url);
               authCtx.saveStripeUserId(token.data.stripeuser);

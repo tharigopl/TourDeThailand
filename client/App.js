@@ -15,9 +15,13 @@ import IconButton from './components/ui/IconButton';
 import HomeScreen from './screens/HomeScreen';
 import ThaiTripScreen from './screens/ThaiTripScreen';
 import GroupChatScreen from './screens/GroupChatScreen';
+import ListScreen from './screens/ListScreen';
 import LinkStripeScreen from './screens/LinkStripeScreen';
+import AllFriends from './screens/AllFriends';
+import AddFriend from './screens/AddFriend'
 import LinkStripeWebViewScreen from './screens/LinkStripeWebViewScreen';
 import StripeContextProvider from './store/stripe-context';
+import FriendsContextProvider from './store/friends-context';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -79,6 +83,35 @@ function StackNavig(){
       <Stack.Screen name="GroupChatScreen" component={GroupChatScreen} />
       <Stack.Screen name="LinkStripeScreen" component={LinkStripeScreen} />
       <Stack.Screen name="LinkStripeWebViewScreen" component={LinkStripeWebViewScreen} />
+      <Stack.Screen name="AllFriends" component={AllFriends} 
+        options={({ navigation, route }) => ({          
+          // Add a placeholder button without the `onPress` to avoid flicker
+          headerRight: ({focused, size}) => (
+                <IconButton
+                  icon="add"
+                  size={24}
+                  onPress={() => {
+                    navigation.navigate('ListScreen');
+                  }}
+                />
+              )
+        })}        
+      />
+      <Stack.Screen name="ListScreen" component={ListScreen} 
+        options={({ navigation, route }) => ({          
+          // Add a placeholder button without the `onPress` to avoid flicker
+          headerRight: ({focused, size}) => (
+                <IconButton
+                  icon="save"
+                  size={24}
+                  onPress={() => {
+                    navigation.navigate('AllFriends');
+                  }}
+                />
+              )
+        })}        
+      />
+      <Stack.Screen name="AddFriend" component={AddFriend} />
     </Stack.Navigator>
     );
 }
@@ -119,6 +152,18 @@ function Root() {
     }
     fetchToken();
   }, []);
+
+  useEffect(() => {
+    async function fetchUid() {
+      const storedUid = await AsyncStorage.getItem('uid');
+      if (storedUid) {
+        authCtx.addUid(storedUid);
+      }
+      setIsTryingLogin(false);
+    }
+    fetchUid();
+  }, []);
+
   if (isTryingLogin) {
     return <AppLoading />;
   }
@@ -131,7 +176,9 @@ export default function App() {
       <StatusBar style="light" />
       <AuthContextProvider>
         <StripeContextProvider>
-          <Root />
+          <FriendsContextProvider>
+            <Root />
+            </FriendsContextProvider>
         </StripeContextProvider>
       </AuthContextProvider>
     </>

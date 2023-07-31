@@ -12,7 +12,7 @@ const StripeUser = require("../models/stripeuser");
 const StripeUserAccountLink = require("../models/stripeaccountlink");
 
 const createStAccount = async (req, res, next) => {
-  console.log("CreaTE Stripe Account1", req.userData);
+  console.log("CreaTE Stripe Account1");
   let accountLink;
   let account;
   let stripeuserdata = {};

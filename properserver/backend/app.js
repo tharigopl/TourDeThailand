@@ -23,7 +23,7 @@ app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use(
   cors({
-    origin: ["http://localhost:19006", "exp://192.168.0.157:19000"],
+    origin: ["http://localhost:19006", "exp://192.168.0.157:19000", "exp://192.168.0.165:19000"],
   })
 );
 

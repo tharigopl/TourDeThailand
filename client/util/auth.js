@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
+//const API_DOMAIN = '192.168.0.157';
+const API_DOMAIN = '192.168.0.165';
 
 async function authenticate(mode, email, password) {
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${API_KEY}`;
@@ -17,11 +19,11 @@ console.log("response.data ", response.data.email);
 }
 
 async function tdtauthenticate(mode, email, password) {
-  var url = `http://192.168.0.157:5000/api/users/login`;
+  var url = `http://${API_DOMAIN}:5000/api/users/login`;
   console.log("POST1111");
   if(mode == 'signUp'){
     console.log("Signup1");
-    url = 'http://192.168.0.157:5000/api/users/signup';
+    url = `http://${API_DOMAIN}:5000/api/users/signup`;
   }
   console.log(url)
   const name = 'test';
