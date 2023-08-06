@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
 const API_DOMAIN = '192.168.0.165';
 //const BACKEND_URL = 'https://uwunm-fe912-default-rtdb.firebaseio.com';
 
@@ -35,7 +36,7 @@ export async function linkStripe(token) {
       }
 
     });
-    console.log("#$#$#$adsasd 111221", response);
+    console.log("#$#$#$adsasd linkStripe", response.data);
     //const id = response.data.name;
     return response.data;
 }
@@ -70,7 +71,7 @@ console.log("config");
     }
 
   });
-  console.log("#$#$#$adsasd !!!!!!!!!!!", response.data);
+  console.log("#$#$#$adsasd getStripeAccount", response.data);
   //const id = response.data.name;
   return response.data;
 }

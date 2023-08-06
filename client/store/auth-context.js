@@ -50,6 +50,7 @@ function AuthContextProvider({ children }) {
   }
 
   function saveStripeUserId(stripeuserid){
+    console.log("Save Stripe user id ", stripeuserid);
     setStripeUserId(stripeuserid);
     AsyncStorage.setItem('stripeuserid');
   }

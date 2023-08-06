@@ -125,14 +125,14 @@ const getStripeAccountByAccountId = async (req, res, next) => {
     console.log("Stripe user");
     try {
       existingStripeUser = await StripeUser.findOne({
-        _id: req.params.stripeaccountid,
+        id: req.params.stripeaccountid,
       });
       console.log("Stripe user ret ", existingStripeUser);
     } catch (err) {
       const error = new HttpError("Stripe User Not Found", 500);
       //return next(error);
     }
-
+    console.log("Existing stripe user ", existingStripeUser)
     accountLink = await stripeService.retrieveStripeAccountByAccountId(
       existingStripeUser.id
     );

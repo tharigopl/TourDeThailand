@@ -24,7 +24,7 @@ export default function LinkStripeScreen() {
     const stripeCtx = useContext(StripeContext);
     const token = authCtx.token;
     console.log("Token &&&&&&&", authCtx);
-    console.log("Stripe Ctx Account &&&&&&&", stripeCtx.stripeuserid);
+    console.log("Stripe Ctx Account &&&&&&&", stripeCtx);
    
     
 

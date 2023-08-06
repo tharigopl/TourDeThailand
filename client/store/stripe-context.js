@@ -12,7 +12,9 @@ function StripeContextProvider({ children }) {
   const [stripeAccount, setStripeAccount] = useState();
 
   function setstripeaccount(stripeaccount) {
+    console.log("Settoing stripe ctx account in store ", stripeaccount);
     setStripeAccount(stripeaccount);
+    console.log("Settoing stripe ctx account in store 1", stripeAccount);
     AsyncStorage.setItem('stripeaccount', stripeaccount);
   }
 

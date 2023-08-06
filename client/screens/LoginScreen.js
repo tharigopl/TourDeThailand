@@ -13,6 +13,7 @@ function LoginScreen({navigation}) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const authCtx = useContext(AuthContext);
+  console.log("Env variables ", process.env.EXPO_PUBLIC_API_URL);
 
   async function loginHandler({ email, password }) {
     console.log("login")
