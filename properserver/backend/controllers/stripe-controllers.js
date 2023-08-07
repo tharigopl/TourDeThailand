@@ -185,7 +185,29 @@ const getStripeBalanceAccountId = async (req, res, next) => {
   });
 };
 
+const createStAccountCustom = async (req, res, next) => {
+  console.log("CreaTE Stripe Custom Account1",req.body.email);
+  let accountLink;
+  let account;
+  
+  try {
+
+    account = await stripeService.createStripeCustomAccount(req.body.email);
+
+  } catch (err) {
+    const error = new HttpError(
+      "Linking custom stripe account failed, please try again later." + err,
+      500
+    );
+  }
+  res.json({
+    account: account,
+    accountLink: accountLink,
+  });
+};
+
 exports.createStAccount = createStAccount;
+exports.createStAccountCustom = createStAccountCustom;
 exports.onBoardedStripe = onBoardedStripe;
 exports.getStripeAccountByAccountId = getStripeAccountByAccountId;
 exports.getStripeBalanceAccountId = getStripeBalanceAccountId;
