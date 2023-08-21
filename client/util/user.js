@@ -72,7 +72,7 @@ async function getUserDetailsAPI(token, uid) {
     return data;
 }
 
-async function updateUserAPI(token, userdata) {
+async function updateUserAPI(token, uid, userdata) {
     console.log("API_DOMAIN",API_DOMAIN);
     const config = {
         headers: { Authorization: `Bearer ${token}` }
@@ -81,14 +81,14 @@ async function updateUserAPI(token, userdata) {
     
     var url = `http://${API_DOMAIN}:5000/api/users/${uid}/`;
 
-    console.log("Add friends  ", token, friendsemail, uid);
+    console.log("Add friends  ", token, userdata, uid);
     
     console.log(url)
     const name = 'test';
-    const response = await axios.patch(url, {"emailids":friendsemail}, config);
+    const response = await axios.patch(url, userdata, config);
 
     const data = response.data;
-    console.log("Add Friends API ", data)
+    console.log("Add Update user API ", data)
     return data;
 }
 
@@ -100,6 +100,6 @@ export function addFriends(token, friends, uid) {
     return addFriendsAPI(token, friends, uid);
 }
 
-export function updateUser(token, userdata) {
-    return updateUserAPI(token, userdata);
+export function updateUser(token, uid, userdata) {
+    return updateUserAPI(token, uid, userdata);
 }

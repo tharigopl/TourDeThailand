@@ -37,7 +37,7 @@ function UserDetails() {
   const token = authCtx.token;
   const uid = authCtx.uid;
   console.log("Inside Get User Details token ", token, userCtx);
-  
+  setIsFetching(false);
   
 //   useEffect(() => {
 //     async function getUserDetail() {

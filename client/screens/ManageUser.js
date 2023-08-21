@@ -3,7 +3,8 @@ import UserForm  from "../components/ManageUser/UserForm";
 import contactData from '../data/contact.json';
 import { GlobalStyles } from '../constants/styles';
 import { USERDETAIL } from '../data/dummy-data';
-import { storeUser, fetchUserDetails, updateUser } from '../util/http';
+import { storeUser, fetchUserDetails } from '../util/http';
+import { updateUser } from '../util/user';
 import { AuthContext } from '../store/auth-context';
 import { useContext, useLayoutEffect, useState, useEffect } from 'react';
 import { UserContext } from '../store/user-context';
@@ -47,6 +48,9 @@ function ManageUser({ route, navigation }){
         console.log("Confirm Handler", isEditing);
         try {
           if (isEditing) {
+            const user = await updateUser(token, authCtx.uid, userData);
+            console.log("Confirm Handler 1", user);
+            userCtx.setuseraccount(user);
             //userCtx.updateUser(editedUserId, userData);
             //await updateUser(editedUserId, userData, token);
           } else {

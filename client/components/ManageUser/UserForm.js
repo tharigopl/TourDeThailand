@@ -95,23 +95,24 @@ function UserForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }){
             country:inputs.country.value,
         };
         console.log("User Form Submit", userData);
-        const fnameIsValid = userData.fname.trim().length > 0;
-        const lnameIsValid = userData.lname.trim().length > 0;
-        const mnameIsValid = userData.mname.trim().length > 0;
-        const emailIsValid = userData.email.trim().length > 0;
-        const unitIsValid = userData.unit.trim().length > 0;
-        const streetIsValid = userData.street.trim().length > 0;
-        const phonenoIsValid = userData.phoneno.trim().length > 0;
-        const fundingsourceIsValid = userData.fundingsource.trim().length > 0;
-        const cntrytaxresidenceIsValid = userData.cntrytaxresidence.trim().length > 0;
-        const dateofbirthIsValid = userData.dateofbirth.trim().length > 0;
-        const cityIsValid = userData.city.trim().length > 0;
-        const stateIsValid = userData.state.trim().length > 0;
-        const postalcodeIsValid = userData.postalcode.trim().length > 0;
-        const countryIsValid = userData.country.trim().length > 0;
+        const fnameIsValid = userData.fname.length > 0;
+        const lnameIsValid = userData.lname.length > 0;
+        const mnameIsValid = userData.mname.length > 0;
+        const emailIsValid = userData.email.length > 0;
+        const unitIsValid = userData.unit.length > 0;
+        const streetIsValid = userData.street.length > 0;
+        const phonenoIsValid = userData.phoneno.length > 0;
+        //const fundingsourceIsValid = userData.fundingsource.length > 0;
+        //const cntrytaxresidenceIsValid = userData.cntrytaxresidence.length > 0;
+        const dateofbirthIsValid = userData.dateofbirth.length > 0;
+        const cityIsValid = userData.city.length > 0;
+        const stateIsValid = userData.state.length > 0;
+        const postalcodeIsValid = userData.postalcode.length > 0;
+        const countryIsValid = userData.country.length > 0;
         console.log("User Form Submit 1", userData);
+        //|| !fundingsourceIsValid || !cntrytaxresidenceIsValid 
         if (!fnameIsValid || !lnameIsValid || !mnameIsValid || !emailIsValid || !unitIsValid ||
-            !streetIsValid || !phonenoIsValid || !fundingsourceIsValid || !cntrytaxresidenceIsValid || !dateofbirthIsValid ||
+            !streetIsValid || !phonenoIsValid || !dateofbirthIsValid ||
             !cityIsValid || !stateIsValid || !postalcodeIsValid || !countryIsValid) {
           console.log('Invalid input', 'Please check your input values');
           setInputs((curInputs) => {
@@ -124,8 +125,8 @@ function UserForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }){
                 unit: {value:curInputs.unit.value, isValid: unitIsValid},
                 street: {value:curInputs.street.value, isValid: streetIsValid},
                 phoneno: {value:curInputs.phoneno.value, isValid: phonenoIsValid},
-                fundingsource: {value:curInputs.fundingsource.value, isValid: fundingsourceIsValid},
-                cntrytaxresidence: {value:curInputs.cntrytaxresidence.value, isValid: cntrytaxresidenceIsValid},
+                //fundingsource: {value:curInputs.fundingsource.value, isValid: fundingsourceIsValid},
+                //cntrytaxresidence: {value:curInputs.cntrytaxresidence.value, isValid: cntrytaxresidenceIsValid},
                 dateofbirth: {value:curInputs.dateofbirth.value, isValid: dateofbirthIsValid},
                 city: {value:curInputs.city.value, isValid: cityIsValid},
                 state: {value:curInputs.state.value, isValid: stateIsValid},
@@ -180,7 +181,7 @@ function UserForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }){
                     value: inputs.dateofbirth.value,
                 }}
                 />
-                <Input
+                {/* <Input
                 label="Country of tax residence"
                 invalid={!inputs.cntrytaxresidence.isValid}
                 textInputConfig={{
@@ -195,7 +196,7 @@ function UserForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }){
                     onChangeText: inputChangedHandler.bind(this, 'fundingsource'),
                     value: inputs.fundingsource.value,
                 }}
-                />
+                /> */}
                 <Input
                     label="Email"
                     invalid={!inputs.email.isValid}
