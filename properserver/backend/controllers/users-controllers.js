@@ -327,7 +327,39 @@ const findSingleUserById = async (req, res, next) => {
 
 
 const updateUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
+  }
 
+  const { params } = req.body;
+  const uid = req.params.uid;
+  console.log("UpdateFriends uid ", uid, req.body);
+  let user;
+  let doc;
+  const filter = { _id: uid };
+  const update = { lname:  req.body};
+  
+  try {
+      
+    // `doc` is the document _before_ `update` was applied
+    doc = await User.findOneAndUpdate(filter, req.body);    
+    
+    doc = await User.findOne(filter);
+    
+    
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      'Something went wrong, could not update place.',
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ user: doc.toObject({ getters: true }) });
 };
 
 exports.findSingleUserById = findSingleUserById;

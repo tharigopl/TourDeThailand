@@ -9,6 +9,7 @@ import { StripeContext } from '../store/stripe-context';
 import { fetchUserDetails } from '../util/http';
 import { linkStripe } from '../util/stripe';
 import { getStripeAccount } from '../util/stripe';
+import { getUserDetails } from '../util/user';
 import { UserContext } from '../store/user-context'; 
 import * as WebBrowser from 'expo-web-browser';
 
@@ -31,33 +32,24 @@ function HomeScreen({ navigation }) {
     console.log("Home Screen Token ", token, uid);
 
     useEffect(() => {
-      async function getUserDetails() {
-        // setIsFetching(true);
-        // try {
-        //   //console.log("Inside User Details "+token);
-        //   console.log("Inside UID  1"+uid, token);
-        //   const userDetail = await fetchUserDetails(token);
-        //   setSelectedUser(userDetail);
-        //   console.log("User Detail fetched ", userDetail);
-        //   console.log("User Detail fetched 1", userDetail[0]);
-        //   console.log("User Detail fetched 2", userDetail[0].id);
-        //   setEditedUserId(userDetail[0].id)
-        //   usersCtx.setUsers(userDetail);
-        //   console.log("User Context", usersCtx.users);
-        //  /*  if(userDetail.length > 0){
-        //     setIsEditing(true);
-        //     console.log("User Detail fetched 1", userDetail);
-        //     setEditedUserId(selectedUser.id)
-        //   } */
-        //   //setFetchedAccounts(accounts);
-        // } catch (error) {
-        //   setError('Could not fetch accounts!');
-        // }
-        // setIsFetching(false);
+      async function getUserDetail() {
+        setIsFetching(true);
+        try {
+          console.log("Inside Get User Details " + token);
+          const user = await getUserDetails(token, uid);
+          //setFetchedAccounts(accounts);
+          console.log("Inside  Get User Details 99999 ", user);
+          usersCtx.setuseraccount(user);
+          console.log("Inside  Get User Details Auth  ", usersCtx);
+        } catch (error) {
+          setError('Could not fetch user 1 details!');
+        }
+        setIsFetching(false);
       }
   
-      getUserDetails();
+      getUserDetail();
     }, []);
+  
 
   function renderCategoryItem(itemData) {
     async function pressHandler() {
@@ -90,7 +82,12 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h4'){ 
-          navigation.navigate('LinkStripeWebViewScreen', {
+          navigation.navigate('Profile', {
+            token:token,
+          });          
+        }
+        else if(itemData.item.id === 'h5'){ 
+          navigation.navigate('ManageUser', {
             token:token,
           });          
         }

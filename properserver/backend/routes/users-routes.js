@@ -16,7 +16,7 @@ router.post(
   '/signup',
   // fileUpload.single('image'),
   [
-    check('name')
+    check('fname')
       .not()
       .isEmpty(),
     check('email')
@@ -30,12 +30,9 @@ router.post(
 router.post('/login', usersController.login);
 
 router.patch(
-  '/:id',
+  '/:uid',
   [
-    check('title')
-      .not()
-      .isEmpty(),
-    check('description').isLength({ min: 5 })
+    
   ],
   usersController.updateUser
 );

@@ -10,12 +10,83 @@ const stripe = require("stripe")(process.env.STRIPE_SK, {
   apiVersion: process.env.STRIPE_API_VERSION || "2022-08-01",
 });
 
+async function createStripeCustomAccount(body) {  
+
+  const data = body;
+  // "business_profile.mcc",
+  // "business_profile.url",
+  // "business_type",
+  // "external_account",
+  // "individual.address.city",
+  // "individual.address.line1",
+  // "individual.address.postal_code",
+  // "individual.address.state",
+  // "individual.dob.day",
+  // "individual.dob.month",
+  // "individual.dob.year",
+  // "individual.email",
+  // "individual.first_name",
+  // "individual.id_number",
+  // "individual.last_name",
+  // "individual.phone",
+  // "individual.ssn_last_4",
+  // "individual.verification.document",
+  // "tos_acceptance.date",
+  // "tos_acceptance.ip"
+
+
+  function now(){
+    return Math.round((new Date()).getTime() / 1000 );
+  }
+
+  console.log("Inside create struipe cstom accouint 1", data.email)
+  let stripeUserData = {};
+  stripeUserData["email"] = data.email;
+  stripeUserData["country"] = "US";
+  stripeUserData["business_type"] = "individual";
+  stripeUserData["type"] = "custom";
+  stripeUserData["business_profile"]["mcc"] = "7623";
+  stripeUserData["business_profile"]["url"] =  data.url
+  stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
+  stripeUserData["external_account"] = data.external_account;
+  stripeUserData["company"]["name"] = data.companyname;
+  stripeUserData["company"]["phone"] = data.phone;
+  stripeUserData["company"]["tax_id"] = data.tax_id;
+  stripeUserData["company"]["address"]["line1"] = data.addressline1;
+  stripeUserData["company"]["address"]["city"] = data.city;
+  stripeUserData["company"]["address"]["state"] = data.state;
+  stripeUserData["company"]["address"]["postalcode"] = data.postalcode;
+
+  console.log("Inside create struipe cstom accouint ", stripeUserData);
+  var account = await stripe.accounts.create(stripeUserData);
+  console.log(account);
+  var accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/authorize',
+      return_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/onboarded',
+      type: 'custom_account_verification',
+      collect:'eventually_due'
+    });
+
+    console.log(accountLink);
+  // console.log("Account link ", accountLink);
+  account['accountLink'] = accountLink;
+
+  
+  return account;
+}
+
 async function createStripeAccount(stripeUserData) {
   //const stripeUserData = {};
   //stripeUserData['business_type'] = 'individual';
   //stripeUserData['email'] = 'tori@gmail.com';
   stripeUserData["country"] = "US";
-  stripeUserData["type"] = "standard";
+  stripeUserData["type"] = "express";
+  stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
+  stripeUserData["business_type"] = "individual";
+  // stripeUserData["business_profile"]["mcc"] = "7623";
+  // stripeUserData["business_profile"]["url"] =  data.url
+
   // stripeUserData['individual'] = {
   //   'last_name' : 'DDDDDE',
   //   'first_name' : 'SSSSSSSDD',
@@ -43,7 +114,22 @@ async function createStripeAccountLink(accountid) {
     account: accountid,
     refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/authorize",
     return_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/onboarded",
-    type: "account_onboarding",
+    type: "account_onboarding"
+  });
+  console.log("Account link ", accountLink);
+  return accountLink;
+}
+
+async function createStripeCustomAccountLink(accountid) {
+  console.log("SSSSS", accountid);
+  // Create an account link for the user's Stripe account
+  const accountLink = await stripe.accountLinks.create({
+    account: accountid,
+    refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/authorize",
+    return_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/onboarded",
+    type: "custom_account_verification",
+    collect:'eventually_due'
+
   });
   console.log("Account link ", accountLink);
   return accountLink;
@@ -102,8 +188,10 @@ async function retrieveStripeBalanceByAccountId(accountid) {
 
 module.exports = {
   createStripeAccount,
+  createStripeCustomAccount,
   onBoardStripe,
   createStripeAccountLink,
+  createStripeCustomAccountLink,
   retrieveStripeAccountByAccountId,
   retrieveStripeBalanceByAccountId,
 };
