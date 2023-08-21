@@ -20,8 +20,12 @@ import LinkStripeScreen from './screens/LinkStripeScreen';
 import AllFriends from './screens/AllFriends';
 import AddFriend from './screens/AddFriend'
 import LinkStripeWebViewScreen from './screens/LinkStripeWebViewScreen';
-import StripeContextProvider from './store/stripe-context';
+import StripeContextProvider, { StripeContext } from './store/stripe-context';
 import FriendsContextProvider from './store/friends-context';
+import ProfileScreen from './screens/ProfileScreen';
+import UserDetails from './screens/UserDetails';
+import UsersContextProvider, { UserContext } from './store/user-context';
+import ManageUser from './screens/ManageUser';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -39,8 +43,11 @@ function AuthStack() {
     </Stack.Navigator>
   );
 }
+
+
 function DrawerNavig(){
   const authCtx = useContext(AuthContext);
+  
   return(
   <Drawer.Navigator initialRouteName="TourDeThailandD">
       <Drawer.Screen name="TourDeThailandD" component={HomeScreen} 
@@ -112,13 +119,25 @@ function StackNavig(){
         })}        
       />
       <Stack.Screen name="AddFriend" component={AddFriend} />
+      <Stack.Screen name="Profile" component={UserDetails} />
+      <Stack.Screen name="ManageUser" component={ManageUser} />
     </Stack.Navigator>
     );
 }
 function AuthenticatedStack() {
   const authCtx = useContext(AuthContext);
+  const userCtx = useContext(UserContext);
+  const stripeCtx = useContext(StripeContext);
+
+  function logout(){
+    console.log("Log out ");
+    authCtx.logout();
+    userCtx.removeuseraccount();
+    stripeCtx.removestripeaccount();
+    console.log("Contexts 1", authCtx, userCtx);
+  }
   return (
-    <Drawer.Navigator screenOptions={{ headerStyle: { backgroundColor: 'papayawhip' }, headerRight: ({tintColor}) => <IconButton icon="exit" color={tintColor} size={24} onPress={authCtx.logout}/>}}>
+    <Drawer.Navigator screenOptions={{ headerStyle: { backgroundColor: 'papayawhip' }, headerRight: ({tintColor}) => <IconButton icon="exit" color={tintColor} size={24} onPress={logout}/>}}>
       {/* <Stack.Screen name="TourDeThailand" component={DrawerNavig} 
         options={{
           headerRight: ({tintColor}) => <IconButton icon="exit" color={tintColor} size={24} onPress={authCtx.logout}/>,
@@ -127,6 +146,7 @@ function AuthenticatedStack() {
       <Drawer.Screen name="TDT" component={StackNavig} /> 
       <Drawer.Screen name="Chat1" component={Chat} />
       <Drawer.Screen name="ThaiTrip" component={ThaiTripScreen} />
+      <Drawer.Screen name="Profile" component={UserDetails} />
     </Drawer.Navigator>    
   );
 }
@@ -175,11 +195,13 @@ export default function App() {
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <StripeContextProvider>
-          <FriendsContextProvider>
-            <Root />
-            </FriendsContextProvider>
-        </StripeContextProvider>
+        <UsersContextProvider>
+          <StripeContextProvider>
+            <FriendsContextProvider>
+              <Root />
+              </FriendsContextProvider>
+          </StripeContextProvider>
+        </UsersContextProvider>
       </AuthContextProvider>
     </>
   );

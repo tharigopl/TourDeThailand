@@ -4,6 +4,7 @@ const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
 //const API_DOMAIN = '192.168.0.157';
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
 const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.82';
 
 
 async function getAllUsersAPI(token) {
