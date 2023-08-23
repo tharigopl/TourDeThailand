@@ -3,8 +3,9 @@ import axios from 'axios';
 const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
 //const API_DOMAIN = '192.168.0.157';
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.165';
 //const API_DOMAIN = '192.168.0.82';
+const API_DOMAIN = 'https://happykid-396701.uc.r.appspot.com';
 
 
 async function addFriendsAPI(token, friendsemail, uid) {
@@ -14,7 +15,7 @@ async function addFriendsAPI(token, friendsemail, uid) {
     };
 
     
-    var url = `http://${API_DOMAIN}:5000/api/users/${uid}/friendsemail`;
+    var url = `${API_DOMAIN}/api/users/${uid}/friendsemail`;
 
     console.log("Add friends  ", token, friendsemail, uid);
     
@@ -34,7 +35,7 @@ async function getUserDetailsAPI(token, uid) {
     };
 
     
-    var url = `http://${API_DOMAIN}:5000/api/users/${uid}`;
+    var url = `${API_DOMAIN}/api/users/${uid}`;
 
     console.log("Get User Details  ", token, uid);
     
@@ -79,7 +80,7 @@ async function updateUserAPI(token, uid, userdata) {
     };
 
     
-    var url = `http://${API_DOMAIN}:5000/api/users/${uid}/`;
+    var url = `${API_DOMAIN}/api/users/${uid}/`;
 
     console.log("Add friends  ", token, userdata, uid);
     

@@ -23,7 +23,7 @@ app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use(
   cors({
-    origin: ["http://localhost:19006", "exp://192.168.0.157:19000", "exp://192.168.0.165:19000", "http://localhost:8081"],
+    origin: ["http://localhost:19006", "exp://192.168.0.157:19000", "exp://192.168.0.165:19000", "http://localhost:8081", "https://happykid-396701.web.app", "http://localhost:3000"],
   })
 );
 
@@ -64,7 +64,7 @@ console.log("@@@@@@@@@@@@@@@", process.env.MONGI_URI);
 mongoose
   .connect(process.env.MONGI_URI)
   .then(() => {
-    app.listen(5000);
+    app.listen(process.env.PORT);
   })
   .catch((err) => {
     console.log(err);

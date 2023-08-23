@@ -1,13 +1,15 @@
 import axios from 'axios';
 
+const API_DOMAIN = 'happykid-396701.uc.r.appspot.com';
+
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.165';
 //const API_DOMAIN = '192.168.0.82';
 //const BACKEND_URL = 'https://uwunm-fe912-default-rtdb.firebaseio.com';
 
-const BACKEND_URL =  `http://${API_DOMAIN}:5000/api/stripe/link`;
+const BACKEND_URL =  `https://${API_DOMAIN}/api/stripe/link`;
 
-const BACKEND_URL_STRIPE = `http://${API_DOMAIN}:5000/api/stripe/`;
+const BACKEND_URL_STRIPE = `https://${API_DOMAIN}/api/stripe/`;
 
 
 

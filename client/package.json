@@ -23,6 +23,8 @@
     "expo-linking": "~5.0.2",
     "expo-status-bar": "~1.6.0",
     "expo-web-browser": "~12.3.2",
+    "firebase": "^10.2.0",
+    "firebase-admin": "^11.10.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.3",
@@ -35,7 +37,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-web": "~0.19.6",
     "react-native-webview": "13.2.2",
-    "serve": "^14.2.0"
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

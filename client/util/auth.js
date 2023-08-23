@@ -3,8 +3,9 @@ import axios from 'axios';
 const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
 //const API_DOMAIN = '192.168.0.157';
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.165';
 //const API_DOMAIN = '192.168.0.82';
+const API_DOMAIN = 'https://happykid-396701.uc.r.appspot.com';
 
 async function authenticate(mode, email, password) {
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${API_KEY}`;
@@ -21,18 +22,17 @@ console.log("response.data ", response.data.email);
 }
 
 async function tdtauthenticate(mode, email, password) {
-  var url = `http://${API_DOMAIN}:5000/api/users/login`;
+  var url = `${API_DOMAIN}/api/users/login`;
   console.log("POST1111");
   if(mode == 'signUp'){
     console.log("Signup1");
-    url = `http://${API_DOMAIN}:5000/api/users/signup`;
+    url = `${API_DOMAIN}/api/users/signup`;
   }
   console.log(url)
   const name = 'test';
   const response = await axios.post(url, {
     email: email,
-    password: password,
-    name: name,
+    password: password
   });
 
   const token = response;

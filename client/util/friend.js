@@ -3,8 +3,9 @@ import axios from 'axios';
 const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
 //const API_DOMAIN = '192.168.0.157';
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.165:5000';
 //const API_DOMAIN = '192.168.0.82';
+const API_DOMAIN = 'https://happykid-396701.uc.r.appspot.com';
 
 
 async function getAllUsersAPI(token) {
@@ -13,7 +14,7 @@ async function getAllUsersAPI(token) {
         headers: { Authorization: `Bearer ${token}` }
     };
     
-    var url = `http://${API_DOMAIN}:5000/api/users`;
+    var url = `${API_DOMAIN}/api/users`;
 
     console.log("Get All Users  ", token);
     
@@ -32,7 +33,7 @@ async function getAllFriendsForUserAPI(token, uid) {
         headers: { Authorization: `Bearer ${token}` }
     };
     
-    var url = `http://${API_DOMAIN}:5000/api/users/${uid}/friends`;
+    var url = `${API_DOMAIN}/api/users/${uid}/friends`;
 
     console.log(url)
     const name = 'test';
@@ -63,7 +64,7 @@ async function deleteFriend(token, friendid) {
         headers: { Authorization: `Bearer ${token}` }
     };
     
-    var url = `http://${API_DOMAIN}:5000/api/users/`;
+    var url = `${API_DOMAIN}/api/users/`;
 
     console.log("Get All Users  ", token);
     
