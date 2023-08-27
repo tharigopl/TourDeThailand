@@ -26,9 +26,18 @@ export default function AddFriend({ navigation }) {
                 console.log("Inside Add friend " + token);
                 const users = await getAllUsers(token);
                 //setFetchedAccounts(accounts);
-                console.log("Inside All users 99999 ", users);
+                console.log("Inside All users 99999 ", users.users);
+                //console.log("Inside All users 99999 ", users.users);
                 setAllUsers(users);
+                users.users.forEach(element => {
+                    element.selected = false;
+                    console.log("For eavch ", element.selected)
+                });
+                // for(let data in users.users){
+                //     console.log("########", data);
+                // }
                 setRenderData(users.users);
+                console.log("Render Data Set", renderData);
 
             } catch (error) {
                 setError('Could not fetch accounts!');
@@ -49,23 +58,52 @@ export default function AddFriend({ navigation }) {
     }
 
     function onPressHandler(item) {
-        console.log("Render Data asasasas ", item);
+        console.log("Render Data asasasas ", item, item.selected);
         console.log("Render Data 111", renderData);
-        let renderDataTemp = [...renderData];
-        console.log("Select 1", renderDataTemp);
-        // for(let data of renderDataTemp){
-        //     console.log("Data", data.sele)
+        item.selected = true;
+        // let renderDataTemp = [...renderData];
+        // console.log("Select 1", renderDataTemp);
+        // for(let data of renderDataTemp){            
+        //     if (data.id === item.id) {
+        //         console.log("Data", data, item);
+        //         if(data.selected == true){
+        //             data.selected = false;
+        //             item.selected = false;
+        //         }else{
+        //             data.selected = true;
+        //             item.selected = true;
+        //         }
+        //     }
+        //     console.log("Selected item equals end", item.selected, data.selected);
         // }
-        for (let data of renderDataTemp) {
-            if (data.id == item.id) {
-                data.selected = (data.selected == null) ? true : !data.selected;
-                break;
-            }
-        }
-        console.log("Select 2", renderDataTemp);
-        console.log("Select 3", {renderDataTemp});
-        //setSelected({renderData});
-        setRenderData({renderDataTemp});
+
+        // for (let data of renderDataTemp) {
+        //     console.log("Selected item equals 1", data.id, data.selected);
+        //     console.log("Selected item equals 2", item.id, item.selected);
+        //     if (data.id === item.id) {
+        //         console.log("Selected item equals", data.id, data.selected);
+
+        //         if(data.selected === "undefined"){
+        //             // data.selected = true;
+        //             // item.selected = true;
+        //         }else if(data.selected == true){
+        //             data.selected = false;
+        //             item.selected = false;
+        //         }else{
+        //             data.selected = true;
+        //             item.selected = true;
+        //         }
+
+        //         console.log("Selected item equals end", item.selected, data.selected);
+        //         //data.selected = (data.selected == "undefined") ? true : !data.selected;
+        //         //item.selected = (item.selected == "undefined") ? true : !item.selected;
+        //         break;
+        //     }
+        // }
+        // console.log("Select 2", renderDataTemp);
+        // console.log("Select 3", {renderDataTemp});
+        // //setSelected({renderData});
+        setRenderData(renderData);
         console.log("Select 4", renderData);
     }
 
@@ -84,12 +122,12 @@ export default function AddFriend({ navigation }) {
                                     ? {
                                         padding: 10,
                                         borderRadius: 5,
-                                        backgroundColor: '#a1a1a1',
+                                        backgroundColor: '#463',
                                     }
                                     : {
                                         padding: 10,
                                         borderRadius: 5,
-                                        backgroundColor: '#111111',
+                                        backgroundColor: '#958',
                                     }
                             }>
                             <Text>{item.email}</Text>

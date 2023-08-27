@@ -80,10 +80,10 @@ async function createStripeAccount(stripeUserData) {
   //const stripeUserData = {};
   //stripeUserData['business_type'] = 'individual';
   //stripeUserData['email'] = 'tori@gmail.com';
-  stripeUserData["country"] = "US";
-  stripeUserData["type"] = "express";
-  stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
-  stripeUserData["business_type"] = "individual";
+  // stripeUserData["country"] = "US";
+  // stripeUserData["type"] = "express";
+  // stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
+  // stripeUserData["business_type"] = "individual";
   // stripeUserData["business_profile"]["mcc"] = "7623";
   // stripeUserData["business_profile"]["url"] =  data.url
 

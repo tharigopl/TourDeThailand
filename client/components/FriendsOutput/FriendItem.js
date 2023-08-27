@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     friendItemSelected: {
         padding: 12,
         marginVertical: 8,
-        backgroundColor: GlobalStyles.colors.primary200,
+        backgroundColor: GlobalStyles.colors.primary800,
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderRadius: 6,

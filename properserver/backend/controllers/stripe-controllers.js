@@ -12,11 +12,12 @@ const StripeUser = require("../models/stripeuser");
 const StripeUserAccountLink = require("../models/stripeaccountlink");
 
 const createStAccount = async (req, res, next) => {
-  console.log("CreaTE Stripe Account1");
+  console.log("CreaTE Stripe Account1", req.query.country);
   let accountLink;
   let account;
   let stripeuserdata = {};
-
+  let userCountry = "";
+  userCountry = req.query.country;
   let existingStripeUser;
   try {
     existingStripeUser = await StripeUser.findOne({
@@ -37,6 +38,20 @@ const createStAccount = async (req, res, next) => {
     try {
       console.log("CreaTE Stripe Account2");
       stripeuserdata["email"] = req.userData.userId.email;
+
+      if(userCountry == "US"){
+        stripeuserdata["country"] = "US";
+        stripeuserdata["type"] = "express";
+        stripeuserdata["requested_capabilities"] = ['card_payments', 'transfers'];
+        stripeuserdata["business_type"] = "individual";
+      }else{
+        stripeuserdata["country"] = "IN";
+        stripeuserdata["type"] = "standard";        
+        stripeuserdata["business_type"] = "individual";
+      }
+
+
+
       account = await stripeService.createStripeAccount(stripeuserdata);
       console.log("CreaTE Stripe Account5", account);
     } catch (err) {

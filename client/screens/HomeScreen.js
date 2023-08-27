@@ -10,6 +10,7 @@ import { fetchUserDetails } from '../util/http';
 import { linkStripe } from '../util/stripe';
 import { getStripeAccount } from '../util/stripe';
 import { getUserDetails } from '../util/user';
+import { getUserLoc } from '../util/auth';
 import { UserContext } from '../store/user-context'; 
 import * as WebBrowser from 'expo-web-browser';
 
@@ -29,7 +30,23 @@ function HomeScreen({ navigation }) {
 
     const [editedUserId, setEditedUserId] = useState("");
     const [selectedUser, setSelectedUser] = useState([]);
+    const [userLoc, setUserLoc] = useState("");
     console.log("Home Screen Token ", token, uid);
+
+    useEffect(() => {
+      async function getUserLocation() {
+        try {
+          console.log("Home Screen Location");
+          const location = await getUserLoc();
+          console.log(location.data);
+          setUserLoc(location.data.country);
+        } catch (error) {
+          //setError('Could not fetch dashoard!');
+        }
+      }
+  
+      getUserLocation();
+    }, []);
 
     useEffect(() => {
       async function getUserDetail() {
@@ -55,7 +72,7 @@ function HomeScreen({ navigation }) {
     async function pressHandler() {
 
         if(itemData.item.id === 'h2'){
-            navigation.navigate('Chat', {
+            navigation.navigate('ProfileOverview', {
                 token:token,
             });
         }
@@ -65,7 +82,7 @@ function HomeScreen({ navigation }) {
           });          
         }
         else if(itemData.item.id === 'h1'){
-          navigation.navigate('ThaiTrip', {
+          navigation.navigate('AllTripsOverview', {
               editedUserId:editedUserId,
               editedUser:selectedUser,
               token:token,
@@ -75,14 +92,10 @@ function HomeScreen({ navigation }) {
           console.log('WWWWWWWWWWWWWWWWWWWw');
           
 
-          navigation.navigate('LinkStripeAccount', {
-              editedUserId:editedUserId,
-              editedUser:selectedUser,
-              token:token,
-          });          
+          navigation.navigate('MultiSelectAddFriend');          
         }
         else if(itemData.item.id === 'h4'){ 
-          navigation.navigate('Profile', {
+          navigation.navigate('AllPartiesOverview', {
             token:token,
           });          
         }
@@ -106,7 +119,7 @@ function HomeScreen({ navigation }) {
       try {
         console.log("Auth Context Home Screen", authCtx);
           if(authCtx.stripeuserid === undefined){
-              const stripeDash = await linkStripe(token);
+              const stripeDash = await linkStripe(token, userLoc);
               //setFetchedAccounts(accounts);
               console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!", stripeDash.account);
               //stripeCtx.setstripeaccount(JSON.stringify(stripeDash.account));

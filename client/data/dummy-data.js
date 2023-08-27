@@ -8,14 +8,14 @@ export const USERDETAIL =
 ;
 
 export const HOMECATEGORIES = [
-  new Category('h1', 'ThaiTrip', '#f5428d'),
-  new Category('h2', 'Chat', '#f54242'),
+  new Category('h1', 'Trips', '#f5428d'),
+  new Category('h2', 'Profile', '#f54242'),
   new Category('h3', 'Friends', '#f5a442'),
-  new Category('h4', 'Profile', '#368dff'),
+  new Category('h4', 'Parties', '#368dff'),
   new Category('h5', 'Edit User', '#41d95d'),
   new Category('h6', 'LinkStripe', '#ffc7ff'),
   //new Category('h7', 'Reminder From The Minder', '#9eecff'),
-  //new Category('h8', 'Link Stripe', '#b9ffb0'),  
+  new Category('h8', 'MultiSelectAddFriend', '#b9ffb0'),  
 ];
 
 export const CATEGORIES = [
