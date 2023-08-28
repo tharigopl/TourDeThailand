@@ -64,7 +64,7 @@ console.log("@@@@@@@@@@@@@@@", process.env.MONGI_URI, process.env.PORT);
 mongoose
   .connect(process.env.MONGI_URI)
   .then(() => {
-    app.listen(5000);
+    app.listen(process.env.PORT);
   })
   .catch((err) => {
     console.log(err);

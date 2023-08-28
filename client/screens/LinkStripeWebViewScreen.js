@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View, FlatList, Pressable, Button} from
 import React from 'react';
 import { Feather } from "@expo/vector-icons";
 import GoalComponent from '../components/GoalComponent';
-import { linkStripe } from '../util/stripe';
+import { linkStripe,  } from '../util/stripe';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../store/auth-context';
 import { WebView } from 'react-native-webview';

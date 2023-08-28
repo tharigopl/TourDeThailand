@@ -20,6 +20,7 @@ import { WebView } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import Constants from "expo-constants";
+import { GlobalStyles } from "../constants/styles";
 
 export default function LinkStripeScreen() {
   const [stAccOnBoardingUrl, setStAccOnBoardingUrl] = useState(null);
@@ -68,13 +69,25 @@ export default function LinkStripeScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.linkstripescreen}>
-      <Text>{stripeaccount && JSON.stringify(stripeaccount)}</Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1, 
+        //paddingHorizontal:20,
+        //paddingVertical:35,
+         paddingTop: 40,
+         paddingBottom: 20,
+         paddingLeft: 20,
+         paddingRight: 20,
+        backgroundColor: GlobalStyles.colors.primary800,
+      },
   linkstripescreen: {
     backgroundColor: "#F7F7F7",
     flex: 1,
