@@ -8,9 +8,14 @@ const router = express.Router();
 
 //router.use(checkAuth);
 
-router.get("/link", checkAuth, stripeControllers.createStAccount);
+//router.get("/link", checkAuth, stripeControllers.createStAccount);
 //router.get("/link", stripeControllers.createStAccount);
+//router.get("/link", checkAuth, stripeControllers.createStAccount);
+router.get("/linkstandard", stripeControllers.createStAccountStandard);
+router.get("/linkstandardpostman", stripeControllers.createStAccountCustomPostMan);
+router.get("/linkexpresspostman", stripeControllers.createStAccountExpressPostMan);
 router.get("/linkcustom", stripeControllers.createStAccountCustom);
+router.get("/linkexpress", stripeControllers.createStAccountExpress);
 
 // router.post(
 //   '/',

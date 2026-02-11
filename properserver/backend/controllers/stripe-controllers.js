@@ -11,7 +11,7 @@ const stripeService = require("../util/stripeservice");
 const StripeUser = require("../models/stripeuser");
 const StripeUserAccountLink = require("../models/stripeaccountlink");
 
-const createStAccount = async (req, res, next) => {
+const createStAccountStandard = async (req, res, next) => {
   console.log("CreaTE Stripe Account1");
   let accountLink;
   let account;
@@ -37,7 +37,7 @@ const createStAccount = async (req, res, next) => {
     try {
       console.log("CreaTE Stripe Account2");
       stripeuserdata["email"] = req.userData.userId.email;
-      account = await stripeService.createStripeAccount(stripeuserdata);
+      account = await stripeService.createStripeStandardAccount(stripeuserdata);
       console.log("CreaTE Stripe Account5", account);
     } catch (err) {
       console.log("CreaTE Stripe Account3", err);
@@ -246,7 +246,135 @@ const createStAccountCustom = async (req, res, next) => {
   });
 };
 
-exports.createStAccount = createStAccount;
+const createStAccountCustomPostMan = async (req, res, next) => {
+  console.log("CreaTE Stripe Custom Account1 posts man",req.body.email);
+  let accountLink;
+  let account;
+  
+  try {
+
+    account = await stripeService.createStripeStandardAccountPostMan(req.body.email);
+
+  } catch (err) {
+    const error = new HttpError(
+      "Linking custom stripe account failed, please try again later." + err,
+      500
+    );
+  }
+  res.json({
+    account: account,
+    accountLink: accountLink,
+  });
+};
+
+const createStAccountExpressPostMan = async (req, res, next) => {
+  console.log("CreaTE Stripe Custom Account1 posts man",req.body.email);
+  let accountLink;
+  let account;
+  
+  try {
+
+    account = await stripeService.createStripeExpressAccountPostMan(req.body.email);
+
+  } catch (err) {
+    const error = new HttpError(
+      "Linking custom stripe account failed, please try again later." + err,
+      500
+    );
+  }
+  res.json({
+    account: account,
+    accountLink: accountLink,
+  });
+};
+
+const createStAccountExpress = async (req, res, next) => {
+  console.log("CreaTE Stripe Account1");
+  let accountLink;
+  let account;
+  let stripeuserdata = {};
+
+  let existingStripeUser;
+  try {
+    existingStripeUser = await StripeUser.findOne({
+      email: req.userData.userId.email,
+    });
+  } catch (err) {
+    const error = new HttpError("Stripe User Not Found", 500);
+    //return next(error);
+  }
+
+  if (existingStripeUser) {
+    const exStUser = await stripeService.retrieveStripeAccountByAccountId(
+      existingStripeUser.id
+    );
+    console.log("Existing Struoe ", exStUser);
+    account = exStUser;
+  } else {
+    try {
+      console.log("CreaTE Stripe Account2");
+      stripeuserdata["email"] = req.userData.userId.email;
+      account = await stripeService.createStripeExpressAccount(stripeuserdata);
+      console.log("CreaTE Stripe Account5", account);
+    } catch (err) {
+      console.log("CreaTE Stripe Account3", err);
+      const error = new HttpError(
+        "Linking stripe account failed, please try again later.",
+        500
+      );
+      return next(error);
+    }
+
+    try { 
+      console.log("CreaTE Stripe Account2= Link", account.id);
+      accountLink = await stripeService.createStripeAccountLink(account.id);
+      console.log("CreaTE Stripe Account Link 2");
+
+      const newAccLink = new StripeUserAccountLink(accountLink);
+      await newAccLink.save();
+      console.log("CreaTE Stripe Account Link 3", newAccLink);
+      account["accountlink"] = newAccLink._id;
+
+      const newAcc = new StripeUser(account);
+      const savedAcc = await newAcc.save();
+
+      let existingUser;
+      try {
+        existingUser = await User.findOne({ email: account.email });
+        console.log("CreaTE Stripe Account Link 3", existingUser);
+        existingUser["stripeuser"] = savedAcc._id;
+
+        await existingUser.save();
+
+        console.log("CreaTE Stripe Account99");
+      } catch (err) {
+        const error = new HttpError(
+          "Signing up failed, please try again later.",
+          500
+        );
+        return next(error);
+      }
+
+      console.log("CreaTE Stripe Account3");
+    } catch (err) {
+      const error = new HttpError(
+        "Linking stripe account failed, please try again later." + err,
+        500
+      );
+      return next(error);
+    }
+  }
+
+  res.json({
+    account: account,
+    accountLink: accountLink,
+  });
+};
+
+exports.createStAccountStandard = createStAccountStandard;
+exports.createStAccountCustomPostMan = createStAccountCustomPostMan;
+exports.createStAccountExpressPostMan = createStAccountExpressPostMan;
+exports.createStAccountExpress = createStAccountExpress;
 exports.createStAccountCustom = createStAccountCustom;
 exports.onBoardedStripe = onBoardedStripe;
 exports.getStripeAccountByAccountId = getStripeAccountByAccountId;

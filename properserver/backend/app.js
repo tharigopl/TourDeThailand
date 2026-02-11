@@ -11,6 +11,18 @@ const friendsRoutes = require("./routes/friends-routes");
 const usersRoutes = require("./routes/users-routes");
 const stripeRoutes = require("./routes/stripe-routes");
 const HttpError = require("./models/http-error");
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
+
+const user = process.env.MONGO_USER;
+const pass = process.env.MONGO_PASS;
+const db = process.env.MONGO_DB;
+const hosts = process.env.MONGO_HOSTS;
+const replicaSet = process.env.MONGO_REPLICA_SET;
+const options = process.env.MONGO_OPTIONS;
+
+const uri = `mongodb://${user}:${pass}@${hosts}/${db}?replicaSet=${replicaSet}&${options}`;
+
 
 // Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
 require("dotenv").config();
@@ -60,9 +72,9 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || "An unknown error occurred!" });
 });
-console.log("@@@@@@@@@@@@@@@", process.env.MONGI_URI);
+console.log("@@@@@@@@@@@@@@@", uri);
 mongoose
-  .connect(process.env.MONGI_URI)
+  .connect(uri)
   .then(() => {
     app.listen(5000);
   })

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+//const API_DOMAIN = '192.168.0.165';
+const API_DOMAIN = 'localhost';
 //const API_DOMAIN = '192.168.0.82';
 //const BACKEND_URL = 'https://uwunm-fe912-default-rtdb.firebaseio.com';
 

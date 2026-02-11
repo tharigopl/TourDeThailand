@@ -76,14 +76,17 @@ async function createStripeCustomAccount(body) {
   return account;
 }
 
-async function createStripeAccount(stripeUserData) {
+async function createStripeStandardAccount(stripeUserData) {
   //const stripeUserData = {};
   //stripeUserData['business_type'] = 'individual';
   //stripeUserData['email'] = 'tori@gmail.com';
+  //stripeUserData["country"] = "US";
+  //stripeUserData["type"] = "express";
   stripeUserData["country"] = "US";
-  stripeUserData["type"] = "express";
+  stripeUserData['business_type'] = 'individual';
+  stripeUserData["type"] = "standard";
   stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
-  stripeUserData["business_type"] = "individual";
+  //stripeUserData["business_type"] = "individual";
   // stripeUserData["business_profile"]["mcc"] = "7623";
   // stripeUserData["business_profile"]["url"] =  data.url
 
@@ -104,6 +107,19 @@ async function createStripeAccount(stripeUserData) {
   // });
   // console.log("Account link ", accountLink);
   // account['accountLink'] = accountLink;
+  return account;
+}
+
+async function createStripeExpressAccount(stripeUserData) {
+  //const stripeUserData = {};
+  //stripeUserData['business_type'] = 'individual';
+  //stripeUserData['email'] = 'tori@gmail.com';
+  stripeUserData["country"] = "US";
+  stripeUserData['business_type'] = 'individual';
+  stripeUserData["type"] = "express";
+
+  const account = await stripe.accounts.create(stripeUserData);
+  
   return account;
 }
 
@@ -186,8 +202,78 @@ async function retrieveStripeBalanceByAccountId(accountid) {
   }
 }
 
+async function createStripeStandardAccountPostMan(email) {  
+  console.log("Inside create struipe cstom accouint 1", email)
+  let stripeUserData = {};
+  stripeUserData["email"] = email;
+  stripeUserData["country"] = "US";
+  stripeUserData["type"] = "standard";
+  //stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
+
+  console.log("Inside create struipe cstom accouint ", stripeUserData);
+  var account = await stripe.accounts.create(stripeUserData);
+  console.log(account);
+  var accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/authorize',
+      return_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/onboarded',
+      type: 'account_onboarding'
+    });
+
+    console.log(accountLink);
+  // console.log("Account link ", accountLink);
+  account['accountLink'] = accountLink;
+
+  
+  return account;
+}
+
+async function createStripeExpressAccountPostMan(email) {  
+  console.log("Inside create express cstom accouint 1", email)
+  let stripeUserData = {};
+  stripeUserData["email"] = email;
+  stripeUserData["country"] = "US";
+  stripeUserData["type"] = "express";
+  //stripeUserData["requested_capabilities"] = ['card_payments', 'transfers'];
+
+  console.log("Inside create struipe express accouint ", stripeUserData);
+  var account = await stripe.accounts.create(stripeUserData);
+  console.log(account);
+  var accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/authorize',
+      return_url: process.env.STRIPE_PUBLIC_DOMAIN + '/api/stripe/onboarded',
+      type: 'account_onboarding'
+    });
+
+    console.log(accountLink);
+  // console.log("Account link ", accountLink);
+  account['accountLink'] = accountLink;
+
+  
+  return account;
+}
+
+async function createStripeAccountStandardLink(accountid) {
+  console.log("SSSSS", accountid);
+  // Create an account link for the user's Stripe account
+  const accountLink = await stripe.accountLinks.create({
+    account: accountid,
+    refresh_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/authorize",
+    return_url: process.env.STRIPE_PUBLIC_DOMAIN + "/api/stripe/onboarded",
+    type: "custom_account_verification",
+    collect:'eventually_due'
+
+  });
+  console.log("Account link ", accountLink);
+  return accountLink;
+}
+
 module.exports = {
-  createStripeAccount,
+  createStripeStandardAccount,
+  createStripeStandardAccountPostMan,
+  createStripeExpressAccountPostMan,
+  createStripeExpressAccount,
   createStripeCustomAccount,
   onBoardStripe,
   createStripeAccountLink,

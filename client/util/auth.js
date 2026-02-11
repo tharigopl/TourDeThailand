@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_KEY = 'AIzaSyDK6dLf66nFmxkJb58V5YMaZwvQYigadOU';
 //const API_DOMAIN = '192.168.0.157';
 //const API_DOMAIN = process.env.EXPO_PUBLIC_API_DOMAIN;
-const API_DOMAIN = '192.168.0.165';
+const API_DOMAIN = 'localhost';
 //const API_DOMAIN = '192.168.0.82';
 
 async function authenticate(mode, email, password) {
@@ -32,7 +32,7 @@ async function tdtauthenticate(mode, email, password) {
   const response = await axios.post(url, {
     email: email,
     password: password,
-    name: name,
+    fname: name,
   });
 
   const token = response;
